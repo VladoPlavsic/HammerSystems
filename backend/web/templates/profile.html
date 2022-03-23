@@ -1,0 +1,71 @@
+{% extends "main.html" %}
+
+{% block content %} 
+
+<div class="container py-5">
+    <br>
+    <div id="logout">
+        <h3>Your identifier:
+            <label id="my_identifier" style="border-bottom: 1px solid; margin-left: 10px"></label>
+        </h3>
+        <button onclick=logOut()>Log out</button>
+    </div>
+    <br>
+    <label>Friend identifier</label>
+    <input id="add_friend_input"/>
+    <button onclick=addFriend()>Add Friend</button>
+    <br>
+    <br>
+    <div>
+        <h2>Friends:</h2>
+        <div id="list">
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function logOut(){
+        document.cookie = 'refresh_token=';
+        document.cookie = 'access_token=';
+        window.location.replace("/");
+    }
+
+    async function getProfile(){
+        try{
+            var profile = await axios.get('http://localhost:1337/api/profile');
+            document.getElementById("my_identifier").innerText =  profile.data.user_identifier
+            document.getElementById('list').appendChild(makeUL(profile.data.friends));
+        }catch{
+			window.location.replace("/");
+        }
+    }
+
+    function makeUL(array) {
+        var list = document.createElement('ul');
+
+        for (var i = 0; i < array.length; i++) {
+            var item = document.createElement('li');
+            item.appendChild(document.createTextNode(array[i]));
+            list.appendChild(item);
+        }
+        return list;
+    }
+
+    window.onload = async function(event) {
+        await getProfile()
+    };
+
+    async function addFriend(){
+        var friend_identifier = document.getElementById("add_friend_input").value
+		try{
+			var response = await axios.post('http://localhost:1337/api/add/friend', {"friend_identifier": friend_identifier});
+            console.log(response)
+		} catch(error){
+			console.log("Error")
+			console.log(error)
+		}
+    }
+</script>
+
+{% endblock %}

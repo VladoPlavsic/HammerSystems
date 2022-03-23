@@ -1,0 +1,57 @@
+{% extends "main.html" %}
+
+{% block content %} 
+
+<div class="container py-5">
+	<h1>Welcome</h1>
+	<div id="phone">
+		<label>Phone number:</label>
+		<input id="phone_number_input"/>
+		<button onclick=sendPhoneNumber()>Enter</button>
+	</div>
+	<div id="code">
+		<label id="code_label"></label>
+		<br>
+		<label>Code:</label>
+		<input id="code_input"/>
+		<button onclick=sendCode()>Enter</button>
+	</div>
+</div>
+
+<script>
+	async function sendPhoneNumber(){
+		var phone_div = document.getElementById("phone")
+		var code_div = document.getElementById("code")
+		var code_label = document.getElementById("code_label")
+		var phone_number = document.getElementById("phone_number_input").value
+		try{
+			var response = await axios.post('http://localhost:1337/api/auth', {"phone_number": phone_number});
+			phone_div.style.display = "none";
+			code_div.style.display = "block";
+			code_label.innerHTML = response.data.code;
+		} catch(error){
+			console.log("Error")
+			console.log(error)
+		}
+	}
+
+	async function sendCode(){
+		var phone_div = document.getElementById("phone")
+		var code_div = document.getElementById("code")
+		var code_label = document.getElementById("code_label")
+		var phone_number = document.getElementById("phone_number_input").value
+		var code = document.getElementById("code_input").value
+		try{
+			var response = await axios.post('http://localhost:1337/api/verify', {"phone_number": phone_number, "code": code});
+			document.cookie = 'refresh_token=' + response.data.refresh_token;
+			document.cookie = 'access_token=' + response.data.access_token;
+			window.location.replace("/profile");
+
+		} catch(error){
+			console.log("Error")
+			console.log(error)
+		}
+	}
+</script>
+
+{% endblock %}
