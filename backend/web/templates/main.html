@@ -49,7 +49,7 @@
     <script>
         async function refreshTokens(){
             try{
-                var response = await axios.post('http://localhost:1337/api/token/refresh', {"access_token": getCookie("access_token"), "refresh_token": getCookie("refresh_token")});
+                var response = await axios.post('api/token/refresh', {"access_token": getCookie("access_token"), "refresh_token": getCookie("refresh_token")});
                 console.log(response)
                 document.cookie = 'refresh_token=' + response.data.refresh_token;
                 document.cookie = 'access_token=' + response.data.access_token;

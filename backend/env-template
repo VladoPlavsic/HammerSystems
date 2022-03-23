@@ -8,3 +8,4 @@ POSTGRES_DB=
 # === Other ===
 DEBUG=
 SECRET_KEY=
+ALLOWED_HOSTS=[]

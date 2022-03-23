@@ -1,0 +1,56 @@
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  build:
+    name: Build, push
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout main
+      uses: actions/checkout@main
+
+    - name: Build container image
+      run: |
+        cd backend
+        docker build -t vladoplavsic/projects:hammer-systems-test -f Dockerfile .
+
+    - name: Docker Login
+      env:
+        DOCKER_USERNAME: vladoplavsic
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+    - name: Push image to Docker Hub
+      run: docker push vladoplavsic/projects:hammer-systems-test
+
+  deploy:
+    needs: build
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: executing remote ssh command using key
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}  
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }} 
+        POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }} 
+        POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}  
+        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          sudo docker pull vladoplavsic/projects:hammer-systems-test
+          sudo docker kill hammer || true
+          sudo docker rm hammer || true
+          sudo docker run -d -p 1337:1337 --name hammer -t vladoplavsic/projects:hammer-systems-test /bin/bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:1337"
+          sudo docker cp .env hammer:/backend/.env
+          sudo docker start hammer

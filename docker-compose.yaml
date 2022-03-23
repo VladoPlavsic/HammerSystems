@@ -8,7 +8,7 @@ services:
     volumes:
       - ./backend/:/backend/
       - /var/run/docker.sock:/var/run/docker.sock
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py createsuperuser --email admin@example.com --username admin && python manage.py runserver 0.0.0.0:1337"
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:1337"
     env_file:
       - ./backend/.env
     ports:

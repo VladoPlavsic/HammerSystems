@@ -25,7 +25,7 @@
 		var code_label = document.getElementById("code_label")
 		var phone_number = document.getElementById("phone_number_input").value
 		try{
-			var response = await axios.post('http://localhost:1337/api/auth', {"phone_number": phone_number});
+			var response = await axios.post('api/auth', {"phone_number": phone_number});
 			phone_div.style.display = "none";
 			code_div.style.display = "block";
 			code_label.innerHTML = response.data.code;
@@ -42,7 +42,7 @@
 		var phone_number = document.getElementById("phone_number_input").value
 		var code = document.getElementById("code_input").value
 		try{
-			var response = await axios.post('http://localhost:1337/api/verify', {"phone_number": phone_number, "code": code});
+			var response = await axios.post('api/verify', {"phone_number": phone_number, "code": code});
 			document.cookie = 'refresh_token=' + response.data.refresh_token;
 			document.cookie = 'access_token=' + response.data.access_token;
 			window.location.replace("/profile");
