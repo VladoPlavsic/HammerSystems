@@ -1,6 +1,5 @@
-# HammerSystems
+<h1><a href="http://51.250.37.48:1337/">Hammer Systems</a></h1>
 <h2> Django DRF API for authenticating via phone number and adding people via invite codes </h2>
-
 <h1>Table of content:</h1>
 <ul>
     <li>
