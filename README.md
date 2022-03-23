@@ -8,6 +8,9 @@
     <li>
         <a href="#api_refs">API references</a>
     </li>
+     <li>
+        <a href="#additional">Additional</a>
+    </li>
 </ul>
 
 <h1 id="summary">Summary:</h1>
@@ -45,7 +48,6 @@ NOTE: Requests that requirer JWT must be sent with headers containing access_tok
     </ul>
     <br>
     <h2>Endpoints request examples using JS AXIOS:</h2>
-<ul>
 <li id="sub_phone"><h3>Submit phone number</h3>
     <div style="font-size: 16.5px; border: 1px solid white; padding: 8px;">
         Request:
@@ -58,7 +60,7 @@ NOTE: Requests that requirer JWT must be sent with headers containing access_tok
         <li>
             <code>Status: 200</code>
             <br>
-            <code>{ code: 5468 }</code>
+            <code>{ created: boolean, code: 5468 }</code>
             <br>
         </li>
         <li>
@@ -92,7 +94,7 @@ NOTE: Requests that requirer JWT must be sent with headers containing access_tok
         </ul>
     </div>
 </li>
-    <br>
+<br>
 <li id="get_prof"><h3>Get profile</h3>
     <div style="font-size: 16.5px; border: 1px solid white; padding: 8px;">
         Request:
@@ -115,7 +117,7 @@ NOTE: Requests that requirer JWT must be sent with headers containing access_tok
         </ul>
     </div>
 </li>
-    <br>
+<br>
 <li id="add_friend"><h3>Add friend via invite code</h3>
     <div style="font-size: 16.5px; border: 1px solid white; padding: 8px;">
         Request:
@@ -138,7 +140,7 @@ NOTE: Requests that requirer JWT must be sent with headers containing access_tok
         </ul>
     </div>
 </li>
-    <br>
+<br>
 <li id="refresh_jwt"><h3>Refresh JWT</h3>
     <div style="font-size: 16.5px; border: 1px solid white; padding: 8px;">
     Request:
@@ -161,4 +163,14 @@ NOTE: Requests that requirer JWT must be sent with headers containing access_tok
         </ul>
     </div>
 </li>
+</ul>
+<br>
+<h1 id="additional">Additional:</h1>
 <ul>
+<li>
+    Implemented pipeline for automated deployment.
+</li>
+<li>
+    Host: Yandex.Cloud compute cloud
+</li>
+</ul>
