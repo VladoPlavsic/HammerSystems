@@ -8,3 +8,5 @@ urlpatterns = [
     path("auth", views.auth, name="web:auth"),
     path("profile", views.profile, name="web:profile"),
 ]
+
+handler404 = 'web.views.handler404'

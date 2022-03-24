@@ -12,3 +12,9 @@ def auth(request):
 @require_http_methods(["GET"])
 def profile(request):
     return render(request=request, template_name="profile.html")
+
+def handler404(request, *args, **argv):
+    response = render('404.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 404
+    return response

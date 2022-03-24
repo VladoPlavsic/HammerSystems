@@ -323,15 +323,16 @@
 					{
 						"key": "Cookie",
 						"value": "access_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJoYW1tZXI6YXV0aCIsImlhdCI6MTY0ODA4NjA3Ny45Njg4MjIsImV4cCI6MTY0ODA4NjM3Ny45Njg4MywicGhvbmVfbnVtYmVyIjoiKzc5Njg1MTI3MTAwIiwiaWRlbnRpZmllciI6Ilg9Zz8zSSIsImlkIjozfQ.NLbh_Bkj2kluIeAoSoUILPVnnQj3PGa8nGKddwUVAS4;refresh_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJoYW1tZXI6YXV0aCIsImlhdCI6MTY0ODA4NjA3Ny45NjkwNDMsImV4cCI6MTY3OTYyMjA3Ny45NjkwNDYsInBob25lX251bWJlciI6Iis3OTY4NTEyNzEwMCIsImlkZW50aWZpZXIiOiJYPWc_M0kiLCJpZCI6M30.5aJNcLVC7rVI9iEuswGORucfWp2nG3EX8DF5EKJSA3c;",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"friend_identifier\":\"[MQUO]\"}"
+					"raw": "{\"phone_number\":\"\"}"
 				},
 				"url": {
-					"raw": "http://51.250.37.48:1337/api/add/friend",
+					"raw": "http://51.250.37.48:1337/api/auth",
 					"protocol": "http",
 					"host": [
 						"51",
@@ -342,8 +343,7 @@
 					"port": "1337",
 					"path": [
 						"api",
-						"add",
-						"friend"
+						"auth"
 					]
 				}
 			},
@@ -351,8 +351,11 @@
 		},
 		{
 			"name": "Refresh JWT",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [
 					{
 						"key": "Cookie",
@@ -362,7 +365,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"access_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJoYW1tZXI6YXV0aCIsImlhdCI6MTY0ODA4NjA3Ny45Njg4MjIsImV4cCI6MTY0ODA4NjM3Ny45Njg4MywicGhvbmVfbnVtYmVyIjoiKzc5Njg1MTI3MTAwIiwiaWRlbnRpZmllciI6Ilg9Zz8zSSIsImlkIjozfQ.NLbh_Bkj2kluIeAoSoUILPVnnQj3PGa8nGKddwUVAS4\", \"refresh_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJoYW1tZXI6YXV0aCIsImlhdCI6MTY0ODA4NjA3Ny45NjkwNDMsImV4cCI6MTY3OTYyMjA3Ny45NjkwNDYsInBob25lX251bWJlciI6Iis3OTY4NTEyNzEwMCIsImlkZW50aWZpZXIiOiJYPWc_M0kiLCJpZCI6M30.5aJNcLVC7rVI9iEuswGORucfWp2nG3EX8DF5EKJSA3c\"}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
