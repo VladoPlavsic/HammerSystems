@@ -145,7 +145,7 @@ NOTE: Requests that requirer JWT must be sent with headers containing access_tok
     <div style="font-size: 16.5px; border: 1px solid white; padding: 8px;">
     Request:
         <br>
-        <code>await axios.post(BASE_URL + '/api/token/refresh', {'access_token':access_token, 'refresh_token': refresh_token})</code>
+        <code>await axios.get(BASE_URL + '/api/token/refresh')</code>
         <br>
         <br>
         Response:

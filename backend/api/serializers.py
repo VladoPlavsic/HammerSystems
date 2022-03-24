@@ -5,6 +5,10 @@ from .models import User, Codes, Friends, Tokens
 import re
 import random
 
+class CustomError(APIException):
+    def __init__(self, status_code, detail):
+        self.status_code = status_code
+        self.detail = detail
 class InvalidPhoneFormat(APIException):
     status_code = 400
     default_detail = 'Invalid value in phone number'
@@ -20,6 +24,14 @@ class UserValidationError(APIException):
 class AddFriendError(APIException):
     status_code = 400
     default_detail = 'Failed to add friend'
+
+class CustomException(APIException):
+    status_code = 400
+    default_detail = 'Serializer validation error!'
+
+    def __init__(self, status_code, message):
+        CustomException.status_code = status_code
+        CustomException.detail = message
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -63,8 +75,11 @@ class VerifySerializer(serializers.ModelSerializer):
         fields = ["code"]
 
     def to_internal_value(self, data):
-        self.__validate_code(data)
-        return super().to_internal_value(data)
+        try:
+            self.__validate_code(data)
+            return super().to_internal_value(data)
+        except Exception as e:
+            raise CustomException(status_code=400, message=str(e))
 
     def get_user(self, data):
         return User.objects.filter(phone_number=data["phone_number"]).first()

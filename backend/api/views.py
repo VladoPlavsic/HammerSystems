@@ -25,9 +25,11 @@ def verify(request):
         if serialized.is_valid():
             return Response(serialized.data)
         
-@api_view(["POST"])
+@api_view(["GET"])
 def refresh_token(request):
-    serialized = TokensSerializer(data=request.data)
+    if "access_token" not in request.COOKIES or "refresh_token" not in request.COOKIES:
+        raise UserValidationError
+    serialized = TokensSerializer(data={"access_token": request.COOKIES["access_token"], "refresh_token": request.COOKIES["refresh_token"]})
     if serialized.is_valid():
         refreshed = refresh_token_pair(serialized)
         serialized = TokensSerializer(data={"refresh_token": refreshed.refresh_token, "access_token": refreshed.access_token})
@@ -36,6 +38,8 @@ def refresh_token(request):
 
 @api_view(["GET"])
 def profile(request):
+    if "access_token" not in request.COOKIES:
+        raise UserValidationError
     access_token = request.COOKIES['access_token']
     user = check_access_token(access_token)
     serialized = FriendsSerailizer(data={"user": user.id})
@@ -45,6 +49,8 @@ def profile(request):
 
 @api_view(["POST"])
 def add_friend(request):
+    if "access_token" not in request.COOKIES:
+        raise UserValidationError
     access_token = request.COOKIES['access_token']
     user = check_access_token(access_token)
     serialized = FriendsSerailizer(data={"user": user.id})
