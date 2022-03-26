@@ -173,4 +173,7 @@ NOTE: Requests that requirer JWT must be sent with headers containing access_tok
 <li>
     Host: Yandex.Cloud compute cloud
 </li>
+<li>
+    PostgreSQL: www.elephantsql.com
+</li>
 </ul>
